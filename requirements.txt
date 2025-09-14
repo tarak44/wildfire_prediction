@@ -23,3 +23,5 @@ Pillow>=8.3.0
 # Optional: Jupyter notebook support
 jupyter>=1.0.0
 ipykernel>=6.0.0
+streamlit>=1.0.0
+
