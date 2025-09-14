@@ -178,8 +178,4 @@ if uploaded_file is not None:
         st.markdown("**Class probabilities:**")
         st.json(prob_display)
 
-st.markdown("---")
-st.markdown("⚠️ This app expects `wildfire_model.pth` in the same folder. The checkpoint should contain either:\n\n"
-            "- a full `model` object (saved during training), or\n"
-            "- a `model_state_dict` + `class_names` (this is what the training script saves).\n\n"
-            "If you still see loading errors, ensure the checkpoint was created by the training script and is not corrupted.")
+
