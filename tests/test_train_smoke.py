@@ -4,6 +4,11 @@ from wildfire_mlops.training import TrainConfig, train_model
 
 
 def test_train_smoke(tmp_path: Path):
+    if not Path("data/train").exists():
+        # CI does not have dataset; skip training smoke test
+        import pytest
+
+        pytest.skip("Dataset not present in CI environment")
     cfg = TrainConfig(
         train_dir=Path("data/train"),
         val_dir=Path("data/valid"),
