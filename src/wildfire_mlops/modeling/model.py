@@ -54,8 +54,10 @@ def load_checkpoint(
 ) -> Tuple[nn.Module, list[str]]:
     checkpoint = _torch_load(path)
 
-    if isinstance(checkpoint, dict) and "model" in checkpoint and isinstance(
-        checkpoint["model"], nn.Module
+    if (
+        isinstance(checkpoint, dict)
+        and "model" in checkpoint
+        and isinstance(checkpoint["model"], nn.Module)
     ):
         model = checkpoint["model"]
         class_names = checkpoint.get("class_names", ["class0", "class1"])

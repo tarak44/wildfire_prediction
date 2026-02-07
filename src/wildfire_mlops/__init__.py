@@ -1,4 +1,5 @@
 """Wildfire MLOps package."""
+
 from .core import get_settings, setup_logging
 from .inference import predict_image
 from .modeling import load_checkpoint

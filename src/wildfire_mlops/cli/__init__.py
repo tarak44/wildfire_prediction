@@ -1,4 +1,5 @@
 """CLI entrypoints."""
+
 from .main import main as inference_main
 from .train import main as train_main
 

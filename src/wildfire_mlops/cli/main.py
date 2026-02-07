@@ -23,9 +23,7 @@ def main() -> None:
     parser.add_argument(
         "--model-arch", default=None, help="Model architecture (custom_cnn or resnet18)"
     )
-    parser.add_argument(
-        "--pretrained", default=None, help="Use pretrained weights (true/false)"
-    )
+    parser.add_argument("--pretrained", default=None, help="Use pretrained weights (true/false)")
     args = parser.parse_args()
 
     settings = get_settings()
@@ -34,9 +32,7 @@ def main() -> None:
     model_path = args.model_path or settings.resolve_model_path(args.model_arch)
     model_arch = args.model_arch or settings.model_arch
     pretrained = (
-        settings.pretrained
-        if args.pretrained is None
-        else str(args.pretrained).lower() == "true"
+        settings.pretrained if args.pretrained is None else str(args.pretrained).lower() == "true"
     )
     model, class_names = load_checkpoint(
         model_path,

@@ -24,6 +24,7 @@ class Settings(BaseSettings):
         if arch == "custom_cnn":
             return self.model_path_custom
         return self.model_path
+
     log_level: str = Field(default="INFO")
 
     api_host: str = Field(default="0.0.0.0")

@@ -34,9 +34,7 @@ def _load_config(path: Path) -> TrainConfig:
         mlflow_run_name=str(data["train"].get("mlflow_run_name") or "run"),
         model_arch=str(data["train"].get("model_arch") or "custom_cnn"),
         pretrained=bool(
-            data["train"].get("pretrained")
-            if data["train"].get("pretrained") is not None
-            else True
+            data["train"].get("pretrained") if data["train"].get("pretrained") is not None else True
         ),
         register_model=bool(
             data["train"].get("register_model")

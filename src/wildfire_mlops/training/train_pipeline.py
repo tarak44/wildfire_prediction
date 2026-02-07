@@ -127,9 +127,9 @@ def train_model(cfg: TrainConfig) -> Dict[str, object]:
 
     train_loader, val_loader, test_loader, class_names = build_dataloaders(data_cfg)
 
-    model = build_model(
-        cfg.model_arch, num_classes=len(class_names), pretrained=cfg.pretrained
-    ).to(cfg.device)
+    model = build_model(cfg.model_arch, num_classes=len(class_names), pretrained=cfg.pretrained).to(
+        cfg.device
+    )
     criterion = nn.CrossEntropyLoss()
     optimizer = Adam(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
 

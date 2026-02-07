@@ -19,9 +19,7 @@ arch = st.selectbox(
 )
 
 model_path = settings.resolve_model_path(arch)
-model, class_names = load_checkpoint(
-    model_path, model_arch=arch, pretrained=settings.pretrained
-)
+model, class_names = load_checkpoint(model_path, model_arch=arch, pretrained=settings.pretrained)
 
 uploaded_file = st.file_uploader("Upload an image (jpg, jpeg, png)", type=["jpg", "jpeg", "png"])
 

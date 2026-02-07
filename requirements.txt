@@ -14,6 +14,7 @@ asyncssh==2.22.0
 atpublic==7.0.0
 attrs==25.4.0
 billiard==4.2.4
+black==24.10.0
 blinker==1.9.0
 cachetools==6.2.6
 celery==5.6.2
@@ -91,6 +92,7 @@ mlflow-skinny==3.9.0
 mlflow-tracing==3.9.0
 mpmath==1.3.0
 multidict==6.7.1
+mypy_extensions==1.1.0
 narwhals==2.16.0
 networkx==3.6.1
 numpy==2.4.2
@@ -128,6 +130,7 @@ pytest==9.0.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
 python-multipart==0.0.22
+pytokens==0.4.1
 pytz==2025.2
 pywin32==311
 PyYAML==6.0.3
@@ -137,6 +140,7 @@ rich==14.3.2
 rpds-py==0.30.0
 rsa==4.9.1
 ruamel.yaml==0.19.1
+ruff==0.15.0
 scikit-learn==1.8.0
 scipy==1.17.0
 scmrepo==3.6.1
@@ -178,7 +182,7 @@ watchfiles==1.1.1
 wcwidth==0.6.0
 websockets==16.0
 Werkzeug==3.1.5
--e git+https://github.com/tarak44/wildfire_prediction@33866c47aa39abe8a68b52c65a6b9a71d3442753#egg=wildfire_mlops
+-e git+https://github.com/tarak44/wildfire_prediction@4f7bcf4130bcac30f417227fc19c25aa5318384f#egg=wildfire_mlops
 yarl==1.22.0
 zc.lockfile==4.0
 zipp==3.23.0
