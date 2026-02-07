@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wildfire-mlops"
+version = "0.1.0"
+description = "Wildfire image classification with production-ready MLOps structure"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Wildfire Prediction"}]
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.27",
+  "streamlit>=1.30",
+  "torch>=1.13",
+  "torchvision>=0.14",
+  "Pillow>=9.5",
+  "numpy>=1.23",
+  "pydantic>=2.6",
+  "pydantic-settings>=2.2",
+  "httpx>=0.28",
+  "python-multipart>=0.0.22",
+  "mlflow>=3.9",
+  "dvc>=3.66"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+  "ruff>=0.3",
+  "black>=24.2",
+  "mypy>=1.8",
+  "httpx>=0.27"
+]
+
+[project.scripts]
+wildfire-cli = "wildfire_mlops.cli.main:main"
+wildfire-train = "wildfire_mlops.cli.train:main"
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "W"]
+
+[tool.black]
+line-length = 100
+
+[tool.pytest.ini_options]
+addopts = "-q"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

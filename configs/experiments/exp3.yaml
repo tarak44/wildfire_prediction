@@ -1,0 +1,22 @@
+data:
+  train_dir: data/train
+  val_dir: data/valid
+  test_dir:
+  image_size: 224
+
+train:
+  batch_size: 16
+  num_workers: 0
+  epochs: 2
+  lr: 0.0003
+  weight_decay: 0.00001
+  device: cpu
+  output_dir: artifacts/exp3
+  seed: 42
+  max_train_samples: 1200
+  max_val_samples: 400
+  mlflow_tracking_uri: ./mlruns
+  mlflow_experiment: wildfire-v1
+  mlflow_run_name: exp3_resnet18
+  model_arch: resnet18
+  pretrained: true

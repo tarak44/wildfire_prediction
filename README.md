@@ -1,146 +1,66 @@
-🔥 Wildfire Prediction Project
+Wildfire Prediction — MLOps‑Grade Project
 
-A deep learning project for predicting wildfires from satellite images using PyTorch.
+Overview
+This repository packages a wildfire image classifier into a clean, production‑style MLOps structure: modular training and inference, versioned data, experiment tracking, monitoring hooks, and automated tests.
 
-📋 Project Overview
+Highlights
+- Modular package under `src/` with clear separation of core, data, training, inference, and monitoring
+- FastAPI for programmatic inference and Streamlit for demos
+- CLI for local inference, batch inference, and evaluation
+- MLflow for experiment tracking and optional model registry
+- DVC for dataset versioning and pipeline reproducibility
+- CI with linting, tests, and security audit
 
-This project implements a CNN-based classifier to distinguish between images containing wildfires and those without. The model is trained on a dataset of satellite images and achieves high accuracy in wildfire detection.
+Project structure
+- `src/wildfire_mlops/`   Core package
+- `api/`                  FastAPI app
+- `apps/`                 Streamlit app
+- `tests/`                Pytest tests
+- `configs/`              Experiment configs
+- `data/`                 Dataset (DVC‑tracked, not committed)
 
-🗂️ Project Structure
-Wildfire_Prediction/
-├── train/                     # Training dataset
-│   ├── wildfire/             # Wildfire images
-│   └── nowildfire/           # Non-wildfire images
-├── valid/                     # Validation dataset
-│   ├── wildfire/
-│   └── nowildfire/
-├── test/                      # Test dataset
-│   ├── wildfire/
-│   └── nowildfire/
-├── SOURCECODE.ipynb            # Main Jupyter notebook
-├── wildfire_prediction_fixed.py  # Training script
-├── run_wildfire_prediction.py    # Command-line interface
-├── config.py                  # Configuration file
-├── requirements.txt           # Python dependencies
-└── README.md                  # This file
+Quickstart
+1) Install
+   `pip install -e .`
 
-🚀 Quick Start
-1. Install Dependencies
-pip install -r requirements.txt
+2) Run API
+   `uvicorn api.main:app --host 0.0.0.0 --port 8000`
 
-2. Prepare Dataset
+3) Run Streamlit
+   `streamlit run apps/streamlit_app.py`
 
-Ensure your dataset is organized as follows:
+4) CLI
+   `wildfire-cli --image path/to/image.jpg`
+   `wildfire-cli --input-dir path/to/images --output-csv outputs/predictions.csv`
+   `wildfire-cli --eval-dir data/test --metrics-json outputs/metrics.json`
 
-train/
-├── wildfire/
-└── nowildfire/
-valid/
-├── wildfire/
-└── nowildfire/
-test/
-├── wildfire/
-└── nowildfire/
+5) Train
+   `wildfire-train --config params.yaml`
 
-3. Run Training
+Artifacts
+- `artifacts/model_best.pth`
+- `artifacts/model_latest.pth`
+- `artifacts/metrics.json`
+- `artifacts/reference_stats.json`
 
-Option A: Command Line Interface
+Configuration (env)
+- `WILDFIRE_MODEL_ARCH=custom_cnn | resnet18`
+- `WILDFIRE_MODEL_PATH_CUSTOM=wildfire_model.pth`
+- `WILDFIRE_MODEL_PATH_RESNET18=artifacts/exp3/model_best.pth`
+- `WILDFIRE_REFERENCE_STATS_PATH=artifacts/reference_stats.json`
 
-python run_wildfire_prediction.py --train
+Experiment Tracking (MLflow)
+- Runs logged to `mlruns/` by default
+- Launch UI: `mlflow ui`
 
+Data Versioning (DVC)
+- Track data: `dvc add data`
+- Reproduce pipeline: `dvc repro -s train`
 
-Option B: Jupyter Notebook
+Monitoring (Drift)
+- Reference stats saved during training
+- Inference computes a lightweight drift score (non‑blocking)
 
-jupyter notebook SOURCECODE.ipynb
-
-
-Option C: Direct Script Execution
-
-python wildfire_prediction_fixed.py
-
-4. Run Inference
-python run_wildfire_prediction.py --inference --image path/to/image.jpg
-
-🔧 Configuration
-
-Edit config.py to modify:
-
-Dataset paths
-
-Model hyperparameters
-
-Training settings
-
-Data augmentation parameters
-
-📊 Model Architectures
-
-WildfireCNN – Custom CNN with 4 convolutional layers.
-
-WildfireResNet – Pre-trained ResNet18 with a custom classifier layer.
-
-📈 Key Features
-
-✅ Robust error handling for corrupted images
-
-✅ Data augmentation for better generalization
-
-✅ Comprehensive evaluation metrics
-
-✅ Model checkpointing and saving
-
-✅ Command-line interface
-
-✅ Detailed logging and progress tracking
-
-✅ Visualization of training curves and results
-
-🎯 Performance Metrics
-
-The model reports:
-
-Accuracy
-
-Precision
-
-Recall
-
-F1-Score
-
-Confusion Matrix
-
-Classification Report
-
-🛠️ Usage Examples
-
-Check Dependencies and Dataset
-
-python run_wildfire_prediction.py --check
-
-
-Train Model
-
-python run_wildfire_prediction.py --train
-
-
-Run Inference
-
-python run_wildfire_prediction.py --inference --image test_image.jpg
-
-📝 Notes
-
-The model uses ImageNet normalization values.
-
-Training is optimized for CPU/GPU compatibility.
-
-Model checkpoints are automatically saved.
-
-All results are logged with timestamps.
-
-🤝 Contributing
-
-Feel free to submit issues and enhancement requests!
-
-📄 License
-
-This project is open source and available under the MIT License.
+Testing
+- `pytest -q` for fast checks
+- Includes API and training smoke tests

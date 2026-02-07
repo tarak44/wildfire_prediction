@@ -1,0 +1,13 @@
+stages:
+  train:
+    cmd: .\.venv\Scripts\python -m wildfire_mlops.cli.train --config params.yaml
+    deps:
+      - data
+      - params.yaml
+      - src/wildfire_mlops
+    outs:
+      - artifacts/model_best.pth
+      - artifacts/model_latest.pth
+      - artifacts/reference_stats.json
+    metrics:
+      - artifacts/metrics.json

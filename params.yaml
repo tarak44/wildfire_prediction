@@ -1,0 +1,25 @@
+data:
+  train_dir: data/train
+  val_dir: data/valid
+  test_dir: data/test
+  image_size: 224
+
+train:
+  batch_size: 32
+  num_workers: 0
+  epochs: 3
+  lr: 0.0003
+  weight_decay: 0.00001
+  device: cpu
+  output_dir: artifacts
+  seed: 42
+  max_train_samples: 500
+  max_val_samples: 200
+  mlflow_tracking_uri: ./mlruns
+  mlflow_experiment: wildfire-v1
+  mlflow_run_name: baseline
+  model_arch: custom_cnn
+  pretrained: true
+  register_model: true
+  model_registry_name: wildfire-classifier
+  max_stat_batches: 10
