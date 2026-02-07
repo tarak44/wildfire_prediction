@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Dict
 
 import torch
-from pathlib import Path
 from PIL import Image
 from torchvision import transforms
 
 from wildfire_mlops.constants import IMAGENET_MEAN, IMAGENET_STD
 from wildfire_mlops.monitoring import compute_sample_stats, drift_score, load_stats
+
 
 @dataclass
 class Prediction:

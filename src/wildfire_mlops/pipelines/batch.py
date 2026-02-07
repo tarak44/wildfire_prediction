@@ -7,8 +7,8 @@ from typing import Iterable
 
 from PIL import Image
 
-from wildfire_mlops.inference import Prediction, predict_image
 from wildfire_mlops.constants import SUPPORTED_IMAGE_EXTS
+from wildfire_mlops.inference import Prediction, predict_image
 
 logger = logging.getLogger(__name__)
 

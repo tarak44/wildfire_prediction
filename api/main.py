@@ -1,13 +1,13 @@
-from io import BytesIO
 import logging
+from io import BytesIO
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image
 
-from wildfire_mlops.core import get_settings, setup_logging, PredictionResponse
+from wildfire_mlops.constants import SUPPORTED_CONTENT_TYPES
+from wildfire_mlops.core import PredictionResponse, get_settings, setup_logging
 from wildfire_mlops.inference import predict_image
 from wildfire_mlops.modeling import load_checkpoint
-from wildfire_mlops.constants import SUPPORTED_CONTENT_TYPES
 
 settings = get_settings()
 setup_logging(settings.log_level)

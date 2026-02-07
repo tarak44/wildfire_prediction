@@ -1,9 +1,10 @@
 from functools import lru_cache
-from pydantic import Field
-from pydantic import ConfigDict
+
+from pydantic import ConfigDict, Field
 from pydantic_settings import BaseSettings
 
 from wildfire_mlops.constants import DEFAULT_CLASS_NAMES, DEFAULT_IMAGE_SIZE
+
 
 class Settings(BaseSettings):
     model_path: str = Field(default="wildfire_model.pth")

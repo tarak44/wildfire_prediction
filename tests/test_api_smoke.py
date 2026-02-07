@@ -1,6 +1,7 @@
+import io
+
 from fastapi.testclient import TestClient
 from PIL import Image
-import io
 
 from api.main import app
 

@@ -1,6 +1,6 @@
 """Training and evaluation utilities."""
-from .metrics import Metrics, compute_metrics
 from .evaluation import evaluate_dataset, save_metrics
+from .metrics import Metrics, compute_metrics
 from .train_pipeline import TrainConfig, train_model
 
 __all__ = [
