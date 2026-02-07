@@ -6,16 +6,15 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List
 
+import mlflow
 import torch
 from torch import nn
 from torch.optim import Adam
 
-import mlflow
-
 from wildfire_mlops.data import DataConfig, build_dataloaders
-from wildfire_mlops.training.metrics import compute_metrics
 from wildfire_mlops.modeling import build_model
 from wildfire_mlops.monitoring import compute_reference_stats
+from wildfire_mlops.training.metrics import compute_metrics
 
 logger = logging.getLogger(__name__)
 
@@ -128,7 +127,9 @@ def train_model(cfg: TrainConfig) -> Dict[str, object]:
 
     train_loader, val_loader, test_loader, class_names = build_dataloaders(data_cfg)
 
-    model = build_model(cfg.model_arch, num_classes=len(class_names), pretrained=cfg.pretrained).to(cfg.device)
+    model = build_model(
+        cfg.model_arch, num_classes=len(class_names), pretrained=cfg.pretrained
+    ).to(cfg.device)
     criterion = nn.CrossEntropyLoss()
     optimizer = Adam(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
 
@@ -141,7 +142,9 @@ def train_model(cfg: TrainConfig) -> Dict[str, object]:
     stats_path = cfg.output_dir / "reference_stats.json"
 
     # Compute reference stats for drift monitoring
-    ref_stats = compute_reference_stats(train_loader, max_batches=cfg.max_stat_batches, device=cfg.device)
+    ref_stats = compute_reference_stats(
+        train_loader, max_batches=cfg.max_stat_batches, device=cfg.device
+    )
     with stats_path.open("w", encoding="utf-8") as f:
         json.dump(ref_stats, f, indent=2)
 
@@ -197,7 +200,12 @@ def train_model(cfg: TrainConfig) -> Dict[str, object]:
             mlflow.log_metric("train_accuracy", float(train_metrics["accuracy"]), step=epoch)
             mlflow.log_metric("val_accuracy", val_acc, step=epoch)
 
-            logger.info("epoch=%s train_acc=%.4f val_acc=%.4f", epoch, train_metrics["accuracy"], val_acc)
+            logger.info(
+                "epoch=%s train_acc=%.4f val_acc=%.4f",
+                epoch,
+                train_metrics["accuracy"],
+                val_acc,
+            )
 
         results = {
             "best_val_accuracy": best_acc,

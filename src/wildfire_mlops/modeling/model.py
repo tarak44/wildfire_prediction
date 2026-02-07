@@ -49,7 +49,9 @@ def _torch_load(path: str):
         return torch.load(path, map_location=torch.device("cpu"))
 
 
-def load_checkpoint(path: str, model_arch: str = "custom_cnn", pretrained: bool = True) -> Tuple[nn.Module, list[str]]:
+def load_checkpoint(
+    path: str, model_arch: str = "custom_cnn", pretrained: bool = True
+) -> Tuple[nn.Module, list[str]]:
     checkpoint = _torch_load(path)
 
     if isinstance(checkpoint, dict) and "model" in checkpoint and isinstance(

@@ -33,8 +33,16 @@ def _load_config(path: Path) -> TrainConfig:
         mlflow_experiment=str(data["train"].get("mlflow_experiment") or "wildfire"),
         mlflow_run_name=str(data["train"].get("mlflow_run_name") or "run"),
         model_arch=str(data["train"].get("model_arch") or "custom_cnn"),
-        pretrained=bool(data["train"].get("pretrained") if data["train"].get("pretrained") is not None else True),
-        register_model=bool(data["train"].get("register_model") if data["train"].get("register_model") is not None else True),
+        pretrained=bool(
+            data["train"].get("pretrained")
+            if data["train"].get("pretrained") is not None
+            else True
+        ),
+        register_model=bool(
+            data["train"].get("register_model")
+            if data["train"].get("register_model") is not None
+            else True
+        ),
         model_registry_name=str(data["train"].get("model_registry_name") or "wildfire-classifier"),
         max_stat_batches=int(data["train"].get("max_stat_batches") or 10),
     )

@@ -5,11 +5,11 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-from PIL import Image, ImageFile
 import torch
+from PIL import Image, ImageFile
 
-from wildfire_mlops.inference import predict_image
 from wildfire_mlops.constants import SUPPORTED_IMAGE_EXTS
+from wildfire_mlops.inference import predict_image
 
 # Handle occasional truncated images in real-world datasets
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -39,7 +39,9 @@ def _safe_div(numer: float, denom: float) -> float:
     return float(numer / denom) if denom else 0.0
 
 
-def _limit_items(items: List[Tuple[Path, int]], max_samples: int | None, seed: int) -> List[Tuple[Path, int]]:
+def _limit_items(
+    items: List[Tuple[Path, int]], max_samples: int | None, seed: int
+) -> List[Tuple[Path, int]]:
     if max_samples is None or max_samples <= 0 or len(items) <= max_samples:
         return items
     g = torch.Generator().manual_seed(seed)
