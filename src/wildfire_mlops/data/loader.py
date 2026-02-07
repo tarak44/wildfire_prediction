@@ -7,12 +7,13 @@ from pathlib import Path
 from typing import Tuple
 
 import torch
-from torch import nn
+from PIL import ImageFile
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-from PIL import ImageFile
 
 from wildfire_mlops.constants import IMAGENET_MEAN, IMAGENET_STD
+
+logger = logging.getLogger(__name__)
 
 # Handle occasional truncated images in real-world datasets
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -62,7 +63,9 @@ def _limit_dataset(dataset, max_samples: int | None, seed: int):
     return torch.utils.data.Subset(dataset, indices)
 
 
-def build_dataloaders(cfg: DataConfig) -> Tuple[DataLoader, DataLoader, DataLoader | None, list[str]]:
+def build_dataloaders(
+    cfg: DataConfig,
+) -> Tuple[DataLoader, DataLoader, DataLoader | None, list[str]]:
     train_tf, eval_tf = build_transforms(cfg.image_size)
 
     train_ds = datasets.ImageFolder(root=str(cfg.train_dir), transform=train_tf)
