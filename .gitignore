@@ -15,7 +15,6 @@ metrics_regression.json
 mlflow.db
 artifacts/
 outputs/
-data/
 logs/
 *.egg-info/
 /data
