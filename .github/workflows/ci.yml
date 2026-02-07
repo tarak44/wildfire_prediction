@@ -25,4 +25,4 @@ jobs:
       - name: Security Audit
         run: |
           python -m pip install pip-audit
-          pip-audit -r requirements.txt
+          pip-audit
