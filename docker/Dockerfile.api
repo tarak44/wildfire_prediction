@@ -8,8 +8,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     MKL_NUM_THREADS=1 \
     WILDFIRE_DEVICE=cpu \
     WILDFIRE_MODEL_ARCH=temporal_multimodal_efficientnet_b0 \
-    WILDFIRE_MODEL_PATH_TEMPORAL_MULTIMODAL_EFFICIENTNET_B0=artifacts/multimodal/multimodal_model_best.pth \
-    WILDFIRE_REFERENCE_STATS_PATH=artifacts/exp4/reference_stats.json \
+    WILDFIRE_PRETRAINED=false \
+    WILDFIRE_MODEL_PATH_TEMPORAL_MULTIMODAL_EFFICIENTNET_B0=deploy/models/multimodal_model_best.pth \
+    WILDFIRE_REFERENCE_STATS_PATH=deploy/models/reference_stats.json \
     WEB_CONCURRENCY=1
 
 RUN apt-get update \
@@ -24,8 +25,7 @@ WORKDIR $HOME/app
 COPY --chown=user requirements.api.txt pyproject.toml README.md ./
 COPY --chown=user src ./src
 COPY --chown=user api ./api
-COPY --chown=user artifacts ./artifacts
-COPY --chown=user wildfire_model.pth ./
+COPY --chown=user deploy/models ./deploy/models
 COPY --chown=user docker/start_api.sh ./docker/start_api.sh
 
 RUN pip install --upgrade pip \

@@ -4,7 +4,9 @@
 .ruff_cache
 .venv
 __pycache__
+artifacts
 data
 mlartifacts
 outputs
 tests
+wildfire_model.pth

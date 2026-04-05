@@ -433,6 +433,10 @@ Suggested production split:
 - Render hosts the FastAPI inference service
 - Hugging Face Docker Space hosts the Streamlit frontend and calls the Render API with `WILDFIRE_API_URL`
 
+Deployment note:
+
+- the API container uses the tracked deployment bundle in `deploy/models/` so public builds do not depend on ignored local training artifacts
+
 ### Deployment Links
 
 Add your deployed URLs here once live:
