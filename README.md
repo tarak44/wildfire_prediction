@@ -206,7 +206,7 @@ Recommendation: escalate to ground crew."
 - **Batch Processing**: 32 images in ~15 seconds
 
 ### Streamlit Frontend (Hugging Face Spaces)
-- **URL**: [Launch Demo](https://huggingface.co/spaces/thara/wildfire-risk-demo)
+- **URL**: [Launch Demo](https://huggingface.co/spaces/tarak44/wildfire-risk-intelligence)
 - **Capabilities**: Drag-and-drop upload, real-time Grad-CAM, risk score
 - **Backend**: Calls Render API with retry logic
 
