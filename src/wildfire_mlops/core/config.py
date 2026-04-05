@@ -12,17 +12,17 @@ class Settings(BaseSettings):
     model_path_resnet18: str = Field(default="artifacts/exp3/model_best.pth")
     model_path_efficientnet_b0: str = Field(default="artifacts/exp3/model_best.pth")
     model_path_multimodal_efficientnet_b0: str = Field(
-        default="artifacts/multimodal/multimodal_model_best.pth"
+        default="deploy/models/multimodal_model_best.pth"
     )
     model_path_temporal_multimodal_efficientnet_b0: str = Field(
-        default="artifacts/multimodal/multimodal_model_best.pth"
+        default="deploy/models/multimodal_model_best.pth"
     )
     device: str = Field(default="cpu")
     image_size: int = Field(default=DEFAULT_IMAGE_SIZE)
     class_names: list[str] = Field(default_factory=lambda: DEFAULT_CLASS_NAMES.copy())
     model_arch: str = Field(default="custom_cnn")
     pretrained: bool = Field(default=True)
-    reference_stats_path: str = Field(default="artifacts/reference_stats.json")
+    reference_stats_path: str = Field(default="deploy/models/reference_stats.json")
     tabular_feature_names: list[str] = Field(
         default_factory=lambda: [
             "temperature_c",
