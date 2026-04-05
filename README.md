@@ -8,7 +8,7 @@
 
 | Platform | Link |
 |----------|------|
-| 🤗 **Hugging Face Demo** | [Launch Interactive Demo](https://huggingface.co/spaces/thara/wildfire-risk-demo) |
+| 🤗 **Hugging Face Demo** | [Launch Interactive Demo](https://huggingface.co/spaces/tarak44/wildfire-risk-intelligence) |
 | 🚀 **FastAPI Backend** | [https://wildfire-risk-api.onrender.com](https://wildfire-risk-api.onrender.com) |
 | 📊 **API Docs** | [Interactive Swagger Docs](https://wildfire-risk-api.onrender.com/docs) |
 
@@ -288,8 +288,8 @@ Recommendation: escalate to ground crew."
 
 ```bash
 # Clone repository
-git clone https://github.com/yourname/wildfire-prediction.git
-cd wildfire-prediction
+git clone https://github.com/tarak44/wildfire_prediction.git
+cd wildfire_prediction
 
 # Create virtual environment
 python -m venv .venv
@@ -543,7 +543,7 @@ Found a bug? Want to improve the system?
 ## 🎬 What's Next?
 
 - ⭐ Star if this helped! Feedback welcome.
-- 🔗 Use the **[Live Demo](https://huggingface.co/spaces/thara/wildfire-risk-demo)** to see it in action.
+- 🔗 Use the **[Live Demo](https://huggingface.co/spaces/tarak44/wildfire-risk-intelligence)** to see it in action.
 - 📧 Questions? Open a GitHub discussion.
 
 ---
