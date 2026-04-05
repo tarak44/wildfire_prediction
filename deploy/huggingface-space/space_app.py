@@ -7,7 +7,10 @@ import httpx
 import streamlit as st
 from PIL import Image
 
-DEFAULT_API_URL = os.getenv("WILDFIRE_API_URL", "").rstrip("/")
+DEFAULT_API_URL = os.getenv(
+    "WILDFIRE_API_URL",
+    "https://wildfire-risk-api.onrender.com",
+).rstrip("/")
 DEFAULT_TIMEOUT = float(os.getenv("WILDFIRE_API_TIMEOUT_SECONDS", "120"))
 
 

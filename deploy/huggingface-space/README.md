@@ -14,7 +14,11 @@ short_description: Streamlit frontend for multimodal wildfire risk inference.
 
 This Docker Space hosts the public Streamlit frontend for the wildfire risk prediction system.
 
-Required Space variable or secret:
+Default backend:
+
+- `https://wildfire-risk-api.onrender.com`
+
+Optional Space variable or secret:
 
 - `WILDFIRE_API_URL`: public base URL of the FastAPI backend, for example `https://wildfire-risk-api.onrender.com`
 
