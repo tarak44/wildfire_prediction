@@ -15,6 +15,6 @@ train:
   seed: 42
   max_train_samples: 64
   max_val_samples: 32
-  mlflow_tracking_uri: ./mlruns
+  mlflow_tracking_uri: sqlite:///mlflow.db
   mlflow_experiment: wildfire-v1
   mlflow_run_name: exp2_lr1e-3

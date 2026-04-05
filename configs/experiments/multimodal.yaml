@@ -1,0 +1,44 @@
+multimodal:
+  train_manifest: data/manifests/train_multimodal.csv
+  val_manifest: data/manifests/val_multimodal.csv
+  test_manifest: data/manifests/test_multimodal.csv
+  image_size: 224
+  image_column: image_path
+  label_column: label
+  tabular_feature_names:
+    - temperature_c
+    - humidity_pct
+    - wind_speed_kph
+    - drought_index
+    - vegetation_dryness
+    - days_since_rain
+  temporal_feature_names:
+    - temperature_c
+    - humidity_pct
+    - wind_speed_kph
+    - drought_index
+    - vegetation_dryness
+  temporal_sequence_column: temporal_sequence
+  temporal_encoder_arch: lstm
+  temporal_hidden_dim: 64
+  temporal_max_sequence_length: 24
+
+train:
+  batch_size: 16
+  num_workers: 0
+  epochs: 3
+  lr: 0.0002
+  weight_decay: 0.00001
+  device: cpu
+  output_dir: artifacts/multimodal
+  seed: 42
+  max_train_samples: 1200
+  max_val_samples: 400
+  mlflow_tracking_uri: sqlite:///mlflow.db
+  mlflow_experiment: wildfire-multimodal
+  mlflow_run_name: multimodal-efficientnet
+  model_arch: temporal_multimodal_efficientnet_b0
+  pretrained: true
+  register_model: true
+  model_registry_name: wildfire-multimodal-risk
+  auxiliary_context_loss_weight: 0.2

@@ -63,6 +63,25 @@ def _limit_dataset(dataset, max_samples: int | None, seed: int):
     return torch.utils.data.Subset(dataset, indices)
 
 
+def _extract_targets(dataset) -> list[int]:
+    if isinstance(dataset, torch.utils.data.Subset):
+        parent_targets = _extract_targets(dataset.dataset)
+        return [parent_targets[index] for index in dataset.indices]
+
+    targets = getattr(dataset, "targets", None)
+    if targets is None:
+        raise ValueError("Dataset does not expose targets for class-weight computation")
+    return list(targets)
+
+
+def compute_class_weights(dataset, num_classes: int) -> torch.Tensor:
+    targets = _extract_targets(dataset)
+    counts = torch.bincount(torch.tensor(targets, dtype=torch.long), minlength=num_classes).float()
+    counts = torch.where(counts == 0, torch.ones_like(counts), counts)
+    weights = counts.sum() / (counts * num_classes)
+    return weights / weights.mean()
+
+
 def build_dataloaders(
     cfg: DataConfig,
 ) -> Tuple[DataLoader, DataLoader, DataLoader | None, list[str]]:

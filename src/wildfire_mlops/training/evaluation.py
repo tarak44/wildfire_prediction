@@ -65,6 +65,8 @@ def evaluate_dataset(
 
     n_classes = len(class_names)
     cm = _confusion_matrix(n_classes)
+    positive_scores: list[float] = []
+    true_labels: list[int] = []
 
     for img_path, true_idx in labeled:
         try:
@@ -82,6 +84,8 @@ def evaluate_dataset(
         )
         pred_idx = class_names.index(pred.class_name)
         cm[true_idx][pred_idx] += 1
+        positive_scores.append(pred.image_wildfire_probability)
+        true_labels.append(true_idx)
 
     total = sum(sum(row) for row in cm)
     correct = sum(cm[i][i] for i in range(n_classes))
@@ -118,9 +122,29 @@ def evaluate_dataset(
         "f1": _safe_div(sum(f1s), n_classes),
     }
 
+    roc_auc = None
+    if n_classes == 2 and positive_scores:
+        positive_examples = [
+            score for score, label in zip(positive_scores, true_labels) if label == 1
+        ]
+        negative_examples = [
+            score for score, label in zip(positive_scores, true_labels) if label == 0
+        ]
+        if positive_examples and negative_examples:
+            wins = 0.0
+            ties = 0.0
+            for positive_score in positive_examples:
+                for negative_score in negative_examples:
+                    if positive_score > negative_score:
+                        wins += 1.0
+                    elif positive_score == negative_score:
+                        ties += 1.0
+            roc_auc = (wins + (0.5 * ties)) / (len(positive_examples) * len(negative_examples))
+
     return {
         "accuracy": accuracy,
         "macro_avg": macro,
+        "roc_auc": roc_auc,
         "per_class": per_class,
         "confusion_matrix": cm,
         "num_samples": total,

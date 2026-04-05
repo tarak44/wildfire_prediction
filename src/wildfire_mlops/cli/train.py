@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 from pathlib import Path
 
 import yaml
@@ -29,7 +30,11 @@ def _load_config(path: Path) -> TrainConfig:
         seed=int(data["train"]["seed"]),
         max_train_samples=int(data["train"].get("max_train_samples") or 0) or None,
         max_val_samples=int(data["train"].get("max_val_samples") or 0) or None,
-        mlflow_tracking_uri=str(data["train"].get("mlflow_tracking_uri") or "./mlruns"),
+        mlflow_tracking_uri=str(
+            os.environ.get("WILDFIRE_MLFLOW_TRACKING_URI")
+            or data["train"].get("mlflow_tracking_uri")
+            or "sqlite:///mlflow.db"
+        ),
         mlflow_experiment=str(data["train"].get("mlflow_experiment") or "wildfire"),
         mlflow_run_name=str(data["train"].get("mlflow_run_name") or "run"),
         model_arch=str(data["train"].get("model_arch") or "custom_cnn"),

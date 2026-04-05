@@ -24,7 +24,9 @@ def test_train_smoke(tmp_path: Path):
         seed=42,
         max_train_samples=32,
         max_val_samples=16,
-        mlflow_tracking_uri="./mlruns",
+        mlflow_tracking_uri=(
+            "sqlite:///" + str((tmp_path / "mlflow.db").resolve()).replace("\\", "/")
+        ),
         mlflow_experiment="wildfire-test",
         mlflow_run_name="smoke",
         model_arch="custom_cnn",

@@ -15,7 +15,7 @@ train:
   seed: 42
   max_train_samples: 500
   max_val_samples: 200
-  mlflow_tracking_uri: ./mlruns
+  mlflow_tracking_uri: sqlite:///mlflow.db
   mlflow_experiment: wildfire-v1
   mlflow_run_name: baseline
   model_arch: custom_cnn

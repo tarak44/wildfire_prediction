@@ -1,22 +1,24 @@
 data:
   train_dir: data/train
   val_dir: data/valid
-  test_dir:
+  test_dir: data/test
   image_size: 224
 
 train:
   batch_size: 16
   num_workers: 0
-  epochs: 2
-  lr: 0.0003
+  epochs: 3
+  lr: 0.0002
   weight_decay: 0.00001
   device: cpu
-  output_dir: artifacts/exp3
+  output_dir: artifacts/exp4
   seed: 42
   max_train_samples: 1200
   max_val_samples: 400
   mlflow_tracking_uri: sqlite:///mlflow.db
-  mlflow_experiment: wildfire-v1
-  mlflow_run_name: exp3_resnet18
-  model_arch: resnet18
+  mlflow_experiment: wildfire-efficientnet
+  mlflow_run_name: exp4_efficientnet_b0
+  model_arch: efficientnet_b0
   pretrained: true
+  register_model: true
+  model_registry_name: wildfire-efficientnet-risk

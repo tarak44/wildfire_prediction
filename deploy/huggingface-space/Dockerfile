@@ -14,14 +14,13 @@ ENV HOME=/home/user
 ENV PATH=/home/user/.local/bin:$PATH
 WORKDIR $HOME/app
 
-COPY --chown=user requirements.streamlit.txt ./
-COPY --chown=user deploy/huggingface-space ./deploy/huggingface-space
+COPY --chown=user requirements.txt ./
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-RUN pip install --upgrade pip \
-    && pip install -r requirements.streamlit.txt
+COPY --chown=user space_app.py ./space_app.py
 
 USER user
 
 EXPOSE 7860
 
-CMD ["streamlit", "run", "deploy/huggingface-space/space_app.py", "--server.address=0.0.0.0", "--server.port=7860"]
+CMD ["streamlit", "run", "space_app.py", "--server.address=0.0.0.0", "--server.port=7860"]

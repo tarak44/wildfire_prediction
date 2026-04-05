@@ -11,7 +11,7 @@ import torch
 from torch import nn
 from torch.optim import Adam
 
-from wildfire_mlops.data import DataConfig, build_dataloaders
+from wildfire_mlops.data import DataConfig, build_dataloaders, compute_class_weights
 from wildfire_mlops.modeling import build_model
 from wildfire_mlops.monitoring import compute_reference_stats
 from wildfire_mlops.training.metrics import compute_metrics
@@ -87,22 +87,31 @@ def _evaluate(model: nn.Module, loader, device: str, class_names: list[str]) -> 
     model.eval()
     all_true = []
     all_pred = []
+    all_score = []
 
     with torch.no_grad():
         for images, labels in loader:
             images = images.to(device)
             labels = labels.to(device)
             outputs = model(images)
-            _, preds = torch.max(outputs, 1)
+            probs = torch.softmax(outputs, dim=1)
+            _, preds = torch.max(probs, 1)
             all_true.append(labels.cpu())
             all_pred.append(preds.cpu())
+            all_score.append(probs[:, -1].cpu())
 
     y_true = torch.cat(all_true)
     y_pred = torch.cat(all_pred)
-    metrics = compute_metrics(y_true, y_pred, class_names)
+    y_score = torch.cat(all_score)
+    metrics = compute_metrics(y_true, y_pred, class_names, y_score=y_score)
 
     return {
         "accuracy": metrics.accuracy,
+        "balanced_accuracy": metrics.balanced_accuracy,
+        "macro_precision": metrics.macro_precision,
+        "macro_recall": metrics.macro_recall,
+        "macro_f1": metrics.macro_f1,
+        "roc_auc": metrics.roc_auc,
         "precision": metrics.precision,
         "recall": metrics.recall,
         "f1": metrics.f1,
@@ -130,7 +139,10 @@ def train_model(cfg: TrainConfig) -> Dict[str, object]:
     model = build_model(cfg.model_arch, num_classes=len(class_names), pretrained=cfg.pretrained).to(
         cfg.device
     )
-    criterion = nn.CrossEntropyLoss()
+    class_weights = compute_class_weights(train_loader.dataset, num_classes=len(class_names)).to(
+        cfg.device
+    )
+    criterion = nn.CrossEntropyLoss(weight=class_weights)
     optimizer = Adam(model.parameters(), lr=cfg.lr, weight_decay=cfg.weight_decay)
 
     best_acc = -1.0
@@ -169,6 +181,7 @@ def train_model(cfg: TrainConfig) -> Dict[str, object]:
                 "max_val_samples": cfg.max_val_samples or 0,
                 "model_arch": cfg.model_arch,
                 "pretrained": cfg.pretrained,
+                "class_weights": json.dumps(class_weights.detach().cpu().tolist()),
             }
         )
 
@@ -199,6 +212,14 @@ def train_model(cfg: TrainConfig) -> Dict[str, object]:
             mlflow.log_metric("train_loss", float(train_metrics["loss"]), step=epoch)
             mlflow.log_metric("train_accuracy", float(train_metrics["accuracy"]), step=epoch)
             mlflow.log_metric("val_accuracy", val_acc, step=epoch)
+            mlflow.log_metric("val_macro_f1", float(val_metrics["macro_f1"]), step=epoch)
+            mlflow.log_metric(
+                "val_balanced_accuracy",
+                float(val_metrics["balanced_accuracy"]),
+                step=epoch,
+            )
+            if val_metrics["roc_auc"] is not None:
+                mlflow.log_metric("val_roc_auc", float(val_metrics["roc_auc"]), step=epoch)
 
             logger.info(
                 "epoch=%s train_acc=%.4f val_acc=%.4f",
@@ -216,6 +237,8 @@ def train_model(cfg: TrainConfig) -> Dict[str, object]:
             test_metrics = _evaluate(model, test_loader, cfg.device, class_names)
             results["test"] = test_metrics
             mlflow.log_metric("test_accuracy", float(test_metrics["accuracy"]))
+            if test_metrics["roc_auc"] is not None:
+                mlflow.log_metric("test_roc_auc", float(test_metrics["roc_auc"]))
 
         metrics_path = cfg.output_dir / "metrics.json"
         with metrics_path.open("w", encoding="utf-8") as f:

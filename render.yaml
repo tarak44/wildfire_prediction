@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: wildfire-risk-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./docker/Dockerfile.api
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: WEB_CONCURRENCY
+        value: 1
+      - key: WILDFIRE_DEVICE
+        value: cpu
+      - key: WILDFIRE_MODEL_ARCH
+        value: temporal_multimodal_efficientnet_b0
+      - key: WILDFIRE_MODEL_PATH_TEMPORAL_MULTIMODAL_EFFICIENTNET_B0
+        value: artifacts/multimodal/multimodal_model_best.pth
+      - key: WILDFIRE_REFERENCE_STATS_PATH
+        value: artifacts/exp4/reference_stats.json
+      - key: WILDFIRE_LOG_LEVEL
+        value: INFO
