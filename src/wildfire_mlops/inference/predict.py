@@ -191,8 +191,7 @@ def _rank_context_factors(features: EnvironmentalFeatures | None) -> list[RiskCo
             factor="drought_index",
             impact=_normalize_feature(features.drought_index, low=0.0, high=800.0),
             rationale=(
-                "Drought pressure is a strong proxy for dry vegetation "
-                "and sustained burn risk."
+                "Drought pressure is a strong proxy for dry vegetation " "and sustained burn risk."
             ),
             raw_value=features.drought_index,
         ),
