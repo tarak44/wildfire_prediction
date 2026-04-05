@@ -439,11 +439,18 @@ Deployment note:
 
 ### Deployment Links
 
-Add your deployed URLs here once live:
+Current public deployment:
 
-- API: `https://<your-render-or-railway-api>.onrender.com`
+- API: `https://wildfire-risk-api.onrender.com`
 - Frontend: `https://huggingface.co/spaces/<username>/wildfire-risk-intelligence`
 - MLflow UI: `https://<internal-or-private-mlflow-host>`
+
+### Live API
+
+- Health: `https://wildfire-risk-api.onrender.com/health`
+- Model info: `https://wildfire-risk-api.onrender.com/model-info`
+- Predict: `POST https://wildfire-risk-api.onrender.com/predict`
+- Batch predict: `POST https://wildfire-risk-api.onrender.com/predict-batch`
 
 Example badge once live:
 
